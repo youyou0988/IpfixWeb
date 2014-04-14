@@ -16,15 +16,19 @@
 
     <script src="/media/bootstrap2.3.2/js/ip_draw_master_detail_charts.js"></script>
     <script src="/media/bootstrap2.3.2/js/highcharts.js"></script>
+    <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+    <script src="/media/bootstrap2.3.2/js/ipfix.js"></script>
 
 
 </head>
 <body>
 	<h3>Tsinghua University Campus Network Anomaly Detection System</h3>
 	Select Begin Time   <input class="form_datetime" type="text" style="margin-top:10px;height:32px" readonly="" placeholder="start time">
+	Select End Time   <input class="end_form_datetime" type="text" style="margin-top:10px;height:32px" readonly="" placeholder="end time">
+	<button class="btn" id="draw">Draw!</button>
 	<div class="row">
 		   <div class="span4">
-		   		<ul class="nav nav-list bs-docs-sidenav affix">
+		   		<ul class="nav nav-list bs-docs-sidenav">
 		   			<li>
 		   				<a href="#typography">
 							<i class="icon-chevron-right"></i>
@@ -58,32 +62,9 @@
 <script type="text/javascript">
 
 $(".form_datetime").datetimepicker({format: 'yyyy-mm-dd hh:ii',autoclose:true,todayBtn:true});
-redraw_master_detail_chart()
-function redraw_master_detail_chart() {
-  $('#chart').html('');
-  params = {'type':'ip','starttime':1397462700,'endtime':1397462700};
-  vars = {'title':'all','url':'/ipfix/get/'}
+$(".end_form_datetime").datetimepicker({format: 'yyyy-mm-dd hh:ii',autoclose:true,todayBtn:true});
 
-  var chart_mode = 'spline';
 
-  draw_master_detail_charts('#chart', params, vars, on_detail_selected, chart_mode);
-}
-
-function on_detail_selected(params, vars, min, max, total_selected_bytes)
-{
-  // Prepare params for Resetting
-    params.starttime = Math.round(min/1000);
-    params.endtime = Math.round(max/1000);
-    originalparams = clone(params);
-    //console.log(originalparams);
-
-  var selected_starttime = Math.round(min/1000);
-  var selected_endtime = Math.round(max/1000);
-  vars.selection = {starttime:selected_starttime, endtime:selected_endtime, total_bytes:total_selected_bytes};
-  invalidate_detail_views(params, vars);
-  update_detail_views(params, vars);
-  
-}
 
 </script>
 

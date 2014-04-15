@@ -11,15 +11,24 @@ import os
 import json
 
 SDIC = {'code': 200, 'msg': 'OK'}
+
 def preprocess(req):
+    ctype='all'
     return render_to_response('detail.html', RequestContext(req, locals()))
 
-def process(req):
+def process(req,type):
     ctype = req.GET.get('type')
-    # res = HttpResponse(json.dumps(ctype), content_type='application/json')
-    # res.status_code = '200'
-    # return res
-    return render_to_response('detail.html', RequestContext(req, locals()))
+    print ctype
+    print type
+    if type=='index':
+        return render_to_response('detail.html', RequestContext(req, locals()))
+    else:
+        res = HttpResponse(json.dumps(ctype), content_type='application/json')
+        res.status_code = '200'
+        return res
+    
+    
+    # return render_to_response('detail.html', RequestContext(req, locals()))
 
 def get_data(req,type):
     ctype = req.GET.get('type')
@@ -33,7 +42,7 @@ def get_data(req,type):
         alldata = IpfixAdEntropyInToOutQ2T10.objects.filter(tstamp__gte=st).filter(tstamp__lte=et)
     elif ctype == 'out-to-in':
         alldata = IpfixAdEntropyOutToInQ2T10.objects.filter(tstamp__gte=st).filter(tstamp__lte=et)
-    elif ctype == 'out-to-out':
+    else :
         alldata = IpfixAdEntropyOutToOutQ2T10.objects.filter(tstamp__gte=st).filter(tstamp__lte=et)
 
     dic = []

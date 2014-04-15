@@ -54,6 +54,8 @@
           chart.addSeries(srcport_entro_series);
           chart.addSeries(dstport_entro_series);
         });
+
+
      }
 
 
@@ -68,20 +70,50 @@
               prepareChart('in-to-in');
               prepareChart('out-to-out');
 
-              // myLoop();
-              // url = '/ipfix/get/?time='+starttime;
-              // window.setInterval(function(){getForm(url)},3000);   
-              function myLoop () {              //  create a loop function
+              myLoop('all');
+              var i=0; 
+              var starttime = Math.floor((new Date()) / 300000) * 300;
+              function myLoop (type) {      //  create a loop function
                   
+                  console.log(starttime)
+                  url = '/ipfix/get/?type='+type+'&starttime='+(starttime+i*10)+'&endtime='+(starttime+i*10+10);
+                  $.getJSON(url,function(data){
+                      $.each(data,function(index,line){
+                               var arr = [ line['tstamp']*1000 ,  line['dstip_entro'] ]
+                               chart.series[0].addPoint(arr,true,true);
+                      });
+                      var testarr =  [(starttime+i*100)*1000, 0.5 ];
+                      console.log(testarr);
+                      $('#chart-'+type).highcharts().series[0].addPoint(testarr,true,true);
+                      
+                  })
                   setTimeout(function(){
                         i++;
-                        if(i<0) myLoop();
+                        if(i<20) myLoop(type);
                     }, 3000);
-                  
                 }
+              // url = '/ipfix/get/?time='+starttime;
+              // window.setInterval(function(){getForm(url)},3000);  
+              
          });
-         $('#sub-nav').click(function(){
-            console.log($(this));
+         $('#sub-nav li').click(function(){
+             // $.getJSON('/ipfix/all?type='+$(this).attr('id'),function(data){
+                  $('#sub-nav li').each(function(index,line){
+                        $(line).removeClass();
+                  })
+                  $('#sub-nav li#'+$(this).attr('id')).addClass('active');
+                  var data = $(this).attr('id');
+                  $('.chart-group div').each(function(index,line){
+                      if($(line).attr('id')=='chart-'+data || $(line).attr('id')=='highcharts-'+(index-1) ){
+                          $(line).css('display','block');
+                      }else{
+                           $(line).css('display','none');
+                      }
+                        
+                  })
+                  // $('#chart-'+data).css('display','block');
+                  // $('#highcharts-'+index*2).css('display','block');
+            // })
          })
           
 

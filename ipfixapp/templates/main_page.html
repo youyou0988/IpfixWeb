@@ -9,7 +9,7 @@
 	<link rel="stylesheet" href="/media/bootstrap2.3.2/css/doc.css">
     <!-- <link rel="stylesheet" href="/media/bootstrap2.3.2/css/bootstrap-responsive.css"> -->
     <link href="/media/bootstrap2.3.2/css/bootstrap-datetimepicker.min.css" rel="stylesheet" media="screen">
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
     <script src="/media/bootstrap2.3.2/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="/media/bootstrap2.3.2/js/bootstrap-datetimepicker.js" charset="UTF-8"></script>
     <script type="text/javascript" src="/media/bootstrap2.3.2/js/bootstrap-datetimepicker.fr.js" charset="UTF-8"></script>
@@ -24,37 +24,42 @@
 <body>
 	<h3>Tsinghua University Campus Network Anomaly Detection System</h3>
 	Select Begin Time   <input class="form_datetime" type="text" style="margin-top:10px;height:32px" readonly="" placeholder="start time">
-	Select End Time   <input class="end_form_datetime" type="text" style="margin-top:10px;height:32px" readonly="" placeholder="end time">
+	<!-- Select End Time   <input class="end_form_datetime" type="text" style="margin-top:10px;height:32px" readonly="" placeholder="end time"> -->
 	<button class="btn" id="draw">Draw!</button>
 	<div class="row">
 		   <div class="span4">
-		   		<ul class="nav nav-list bs-docs-sidenav">
-		   			<li>
-		   				<a href="#typography">
+		   		<ul class="nav nav-list bs-docs-sidenav" id='sub-nav'>
+		   			<li class="{% if ctype == 'all' %} active {% endif %}" id='all'>
+		   				<a href="#">
 							<i class="icon-chevron-right"></i>
 							All
 						</a>
 		   			</li>
-		   			<li><a href="#typography">
+		   			<li class="{% if ctype == 'in-to-out' %} active {% endif %}" id='in-to-out'>
+		   				<a href="#">
 							<i class="icon-chevron-right"></i>
 							in-to-out
 						</a></li>
-		   			<li><a href="#typography">
+		   			<li class="{% if ctype == 'out-to-in' %} active {% endif %}" id='out-to-in'>
+		   				<a href="#">
 							<i class="icon-chevron-right"></i>
 							out-to-in
 						</a></li>
-		   			<li><a href="#typography">
+		   			<li class="{% if ctype == 'in-to-in' %} active {% endif %}" id='in-to-in'>
+		   				<a href="#">
 							<i class="icon-chevron-right"></i>
 							in-to-in
 						</a></li>
-		   			<li><a href="#typography">
+		   			<li class="{% if ctype == 'out-to-out' %} active {% endif %}" id='out-to-out'>
+		   				<a href="#">
 							<i class="icon-chevron-right"></i>
 							out-to-out
 						</a></li>
 		   		</ul>
 		   </div>
 		   <div class="span8">
-		   		<div id="chart" style="margin:20px auto 10px auto;width:100%;height:400px"></div>
+		   	   {% block content %}{% endblock %}
+		   		
 		   </div>
 	</div>
 </body>
@@ -62,7 +67,7 @@
 <script type="text/javascript">
 
 $(".form_datetime").datetimepicker({format: 'yyyy-mm-dd hh:ii',autoclose:true,todayBtn:true});
-$(".end_form_datetime").datetimepicker({format: 'yyyy-mm-dd hh:ii',autoclose:true,todayBtn:true});
+// $(".end_form_datetime").datetimepicker({format: 'yyyy-mm-dd hh:ii',autoclose:true,todayBtn:true});
 
 
 

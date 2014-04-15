@@ -1,0 +1,20 @@
+{% extends "main_page.html" %}
+{% block content %}
+{{ ctype }}
+{% if ctype == 'all' %}
+<div id="chart-all" style="margin:20px auto 10px auto;width:100%;height:400px"></div>
+{% endif %}
+{% if ctype == 'in-to-out' %}
+<div id="chart-in-to-out" style="margin:20px auto 10px auto;width:100%;height:400px"></div>
+{% endif %}
+{% if ctype == 'out-to-in' %}
+<div id="chart-out-to-in" style="margin:20px auto 10px auto;width:100%;height:400px"></div>
+{% endif %}
+{% if ctype == 'in-to-in' %}
+<div id="chart-in-to-in" style="margin:20px auto 10px auto;width:100%;height:400px"></div>
+{% endif %}
+{% if ctype == 'out-to-out' %}
+<div id="chart-out-to-out" style="margin:20px auto 10px auto;width:100%;height:400px"></div>
+{% endif %}
+
+{% endblock %}
